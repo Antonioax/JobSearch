@@ -1,47 +1,61 @@
-<script setup lang="ts">
-import HelloWorld from './components/HelloWorld.vue'
-import TheWelcome from './components/TheWelcome.vue'
+<script setup>
+import { onMounted, ref } from "vue";
+
+const name = ref("Antonio");
+const status = ref("active");
+const tasks = ref(["eijd", "jijief", "jijecj"]);
+
+const newTask = ref("");
+
+const changeStatus = () => {
+  status.value = !status.value;
+};
+
+const addTask = () => {
+  if (newTask.value.trim() !== "") tasks.value.push(newTask.value);
+};
+
+const clear = () => {
+  tasks.value = [];
+};
+
+const deleteTask = (index) => {
+  tasks.value.splice(index, 1);
+};
+
+onMounted(async () => {
+  try {
+    const response = await fetch("https://jsonplaceholder.typicode.com/todos");
+    const data = await response.json();
+    tasks.value = data.map((t) => t.title);
+  } catch (error) {
+    console.log("error fetching tasks.");
+  }
+});
 </script>
 
 <template>
-  <header>
-    <img alt="Vue logo" class="logo" src="./assets/logo.svg" width="125" height="125" />
+  <h1>{{ name }}</h1>
+  <p v-if="status">User is active.</p>
+  <p v-else>User is inactive</p>
 
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
-    </div>
-  </header>
+  <form @submit.prevent="addTask">
+    <label for="newTask">Add Task</label>
+    <input type="text" id="task" name="task" v-model="newTask" />
+    <button type="submit">Add</button>
+    <button type="button" @click="clear">Clear</button>
+  </form>
 
-  <main>
-    <TheWelcome />
-  </main>
+  <h3>
+    <ul>
+      <li v-for="(task, index) in tasks" :key="index">
+        {{ task }}
+        <button @click="deleteTask(index)">Delete</button>
+      </li>
+    </ul>
+  </h3>
+
+  <button @click="changeStatus">Change Status</button>
 </template>
 
-<style scoped>
-header {
-  line-height: 1.5;
-}
-
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
-}
-
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
-
-  .logo {
-    margin: 0 2rem 0 0;
-  }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
-}
-</style>
+<style scoped></style>
