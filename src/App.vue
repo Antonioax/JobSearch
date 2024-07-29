@@ -1,9 +1,9 @@
 <script setup lang="ts">
+import Navbar from "./components/Navbar.vue";
 </script>
 
 <template id="app">
-  <h1 class="text-2xl">Vue Jobs</h1>
+  <Navbar />
 </template>
 
-<style>
-</style>
+<style></style>
