@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script setup>
 defineProps({
   bg: {
     type: String,

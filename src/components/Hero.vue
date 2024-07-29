@@ -1,7 +1,5 @@
-<script setup lang="ts">
-import type { DefineProps } from "vue";
-
-defineProps({
+<script setup>
+const props = defineProps({
   title: {
     type: String,
     default: "Become a Vue Dev",

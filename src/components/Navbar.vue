@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script setup>
 import logo from "@/assets/img/logo.png";
 </script>
 
