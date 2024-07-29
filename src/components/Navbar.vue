@@ -40,5 +40,3 @@ import logo from "@/assets/img/logo.png";
     </div>
   </nav>
 </template>
-
-<style></style>
